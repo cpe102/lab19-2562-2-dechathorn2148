@@ -70,6 +70,44 @@ void Unit::newTurn(){
 //
 //
 //
+void Unit::guard(){
+	guard_on = true;
+}
+
+int Unit::heal(){
+	int heal = rand()%10+20;
+	int max = hpmax - hp;
+	if(max < heal ) {
+		hp = hpmax;
+		heal = max;
+	}
+	else 
+	{
+		hp += heal;
+	}
+	return heal;
+
+}
+
+int Unit::attack(Unit &target){
+    return target.beAttacked(atk);
+}
+
+int Unit::beAttacked(int oppatk){
+    int dmg = oppatk-def;
+	if(dmg <= 0 ) dmg = 0;
+	if(guard_on == true)
+	{
+		dmg = dmg/3;
+	}
+	hp = hp-dmg;
+	return dmg;
+}
+
+bool Unit::isDead(){
+	if(hp <= 0) return true;
+	else return false;
+}
 
 void drawScene(char p_action,int p,char m_action,int m){
 	cout << "                                                       \n";
